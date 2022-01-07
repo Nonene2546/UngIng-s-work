@@ -13,12 +13,14 @@ $("#image-selector").change(function () {
 	reader.readAsDataURL(file);
 });
 
+let binmodel;
 let modelLoaded = false;
 $( document ).ready(async function () {
 	modelLoaded = false;
 	$('.progress-bar').show();
     console.log( "Loading model..." );
-    binmodel = await tf.loadLayersModel('model/binary.json');
+    // binmodel = await tf.loadLayersModel('model/binary.json');
+	multimodel = await tf.loadLayersModel('model_4/model.json');
     console.log( "Model loaded." );
 	$('.progress-bar').hide();
 	modelLoaded = true;
@@ -32,13 +34,34 @@ $("#predict-button").click(async function () {
 	
 	// Pre-process the image
 	console.log( "Loading image..." );
-	let tensor = tf.browser.fromPixels(image, 1)
-		.resizeNearestNeighbor([350,350]) // change the image size
+	let tensor = tf.browser.fromPixels(image)
+		.resizeNearestNeighbor([224,224]) // change the image size
 		.expandDims()
 		.toFloat()
 		.div(tf.scalar(255.0))//convert to gray
-	let binpredict = await binmodel.predict(tensor).data();
-	console.log(binpredict)
-	$('#prediction-list').empty()
-	$('#prediction-list').append(`<li>cataract: ${binpredict[0].toFixed(6)}</li>`)
+	// let binpredict = await binmodel.predict(tensor).data();
+	// console.log(binpredict)
+	// $('#prediction-list').empty()
+	// $('#prediction-list').append(`<li>pneumonia: ${binpredict[0].toFixed(6)}</li>`)
+
+	let multipredicts = await multimodel.predict(tensor).data();
+	console.log(multipredicts)
+	let top5 = Array.from(multipredicts)
+		.map(function (p, i) { // this is Array.map
+			return {
+				probability: p,
+				className: MULTICLASS[i] // we are selecting the value from the obj
+			};
+		})
+		.sort(function (a, b) {
+			return b.probability - a.probability;
+		})
+	top5.forEach(function (p) {
+		$("#prediction-list").append(`<li>${p.className}: ${p.probability.toFixed(6)}</li>`);
+	});
+	// let sum = 0
+	// multipredicts.forEach(function(p){
+	// 	sum += p
+	// })
+	// console.log(sum)
 });
