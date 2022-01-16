@@ -41,7 +41,6 @@ $("#predict-button").click(async function () {
 		.div(tf.scalar(255.0))//convert to gray
 	// let binpredict = await binmodel.predict(tensor).data();
 	// console.log(binpredict)
-	// $('#prediction-list').empty()
 	// $('#prediction-list').append(`<li>pneumonia: ${binpredict[0].toFixed(6)}</li>`)
 
 	let multipredicts = await multimodel.predict(tensor).data();
@@ -56,6 +55,7 @@ $("#predict-button").click(async function () {
 		.sort(function (a, b) {
 			return b.probability - a.probability;
 		})
+	$('#prediction-list').empty()
 	top5.forEach(function (p) {
 		$("#prediction-list").append(`<li>${p.className}: ${p.probability.toFixed(6)}</li>`);
 	});
