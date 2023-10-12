@@ -5,42 +5,66 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="Use the power of Machine Learning to diagnose TB from chest x-rays.">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<style>
-			body {
-				min-height: 75rem;
-				padding-top: 4.5rem;
-			}
-
-			li{
-				font-size: 2rem;
-			}
-
-			.bd-placeholder-img {
-				font-size: 1.125rem;
-				text-anchor: middle;
-				-webkit-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-				user-select: none;
-			}
-
-			@media (min-width: 768px) {
-				.bd-placeholder-img-lg {
-					font-size: 3.5rem;
-				}
-			}
-			@media (max-width: 768px){
-				html{
-					font-size: 0.7em;
-				}
-			}
-		</style>
 	</head>
 	<body>
-		
-		<main role="main" style="width: 100%;">
+    <div class="loading-container" id="model-loading-container">
+      <div class="loading"></div>
+      <div class="loading-txt">Now loading ...</div>
+    </div>
+    <div class="title-container">
+      <div class="title">โปรแกรมคำนวณโอกาสเป็นโรคทางตาผ่านภาพฟันดัส</div>
+    </div>
+    <div class="input-container">
+      <div class="image-selector-container">
+        <input type="file" id="image-selector">
+      </div>
+      <div class="predict-button-container">
+        <button id="predict-button" class="predict-button">Predict</button>
+      </div>
+    </div>
+    <div class="output-container">
+      <div class="image-container">
+        <div class="image-title">Image</div>
+        <img id="selected-image" class="selected-image">
+      </div>
+      <div class="predict-container">
+        <div class="predict-title">Predictions</div>
+        <div class="predict-result-container">
+          <div class="loading-container" id="predict-loading-container">
+            <div class="loading"></div>
+          </div>
+          <div class="result-container">
+            <div class="result-label" id="result-0">1</div>
+            <div class="result-bar" id="result-bar-0"></div>
+            <div class="result-number" id="result-number-0"></div>
+          </div>
+          <div class="result-container">
+            <div class="result-label" id="result-1"></div>
+            <div class="result-bar" id="result-bar-1"></div>
+            <div class="result-number" id="result-number-1"></div>
+          </div>
+          <div class="result-container">
+            <div class="result-label" id="result-2"></div>
+            <div class="result-bar" id="result-bar-2"></div>
+            <div class="result-number" id="result-number-2"></div>
+          </div>
+          <div class="result-container">
+            <div class="result-label" id="result-3"></div>
+            <div class="result-bar" id="result-bar-3"></div>
+            <div class="result-number" id="result-number-3"></div>
+          </div>
+          <div class="result-container">
+            <div class="result-label" id="result-4"></div>
+            <div class="result-bar" id="result-bar-4"></div>
+            <div class="result-number" id="result-number-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+		<!-- <main role="main" style="width: 100%;">
 			<div class="row">
 				<div class="col-12">
 					<center>
@@ -74,7 +98,7 @@
 					</div>
 				</div>
 			</div>
-		</main>
+		</main> -->
 
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
