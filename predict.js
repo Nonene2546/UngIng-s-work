@@ -5,7 +5,11 @@ $("#image-selector").change(function () {
 	reader.onload = function () {
 		let dataURL = reader.result
 		$("#selected-image").attr("src", dataURL)
-		$("#prediction-list").empty()
+		for(let i=0;i<5;i++){
+      document.getElementById('result-' + i).innerHTML = ''
+      document.getElementById('result-bar-' + i).style.width = '0'
+      document.getElementById('result-number-' + i).innerHTML = ''
+    }
 		imageLoaded = true
 	}
 	
@@ -54,13 +58,12 @@ $("#predict-button").click(async function () {
 		.sort(function (a, b) {
 			return b.probability - a.probability
 		})
-	$('#prediction-list').empty()
   let i = 0
 	top5.forEach(function (p) {
     document.getElementById('result-' + i).innerHTML = p.className
     console.log(((p.probability * 50).toFixed(2)).toString() + '%')
     document.getElementById('result-bar-' + i).style.width = ((p.probability * 50).toFixed(2)).toString() + '%'
-    document.getElementById('result-number-' + i).innerHTML = (p.probability.toFixed(4) * 100).toString() + '%'
+    document.getElementById('result-number-' + i).innerHTML = (p.probability * 100).toFixed(2).toString() + '%'
     i += 1
 	})
   $('#predict-loading-container').hide()
