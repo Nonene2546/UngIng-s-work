@@ -3,6 +3,19 @@
   100% { transform: rotate(360deg); }
 }
 
+@keyframes spin2 {
+  0% {
+    transform: rotate(0deg);
+    width: 0%;
+    height: 0%;
+  }
+  100%{
+    transform: rotate(3600deg);
+    width: 100%;
+    height: 100%;
+  }
+}
+
 #predict-loading-container{
   display: none;
 }
@@ -126,6 +139,10 @@
 }
 
 body {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -163,6 +180,10 @@ li{
 @media (max-width: 760px){
   body{
     overflow-y: scroll;
+  }
+  .input-container{
+    flex-direction: column;
+    justify-content: space-around;
   }
   .output-container{
     flex-direction: column;

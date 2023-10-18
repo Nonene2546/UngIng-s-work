@@ -67,6 +67,8 @@ $("#predict-button").click(async function () {
     i += 1
 	})
   $('#predict-loading-container').hide()
+  document.getElementById('predict-result-container').style.animation = ''
+  document.getElementById('predict-result-container').style.animation = 'spin2 1s linear'
 	// let sum = 0
 	// multipredicts.forEach(function(p){
 	// 	sum += p
