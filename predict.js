@@ -35,17 +35,16 @@ $("#predict-button").click(async function () {
 	
 	let image = $('#selected-image').get(0)
 	
-	// Pre-process the image
-	console.log( "Loading image..." )
+  $('#predict-loading-container').show()
+
 	let tensor = tf.browser.fromPixels(image)
 		.resizeNearestNeighbor([224,224]) // change the image size
 		.expandDims()
 		.toFloat()
-		.div(tf.scalar(255.0))//convert to gray
+		.div(tf.scalar(255.0))
 	// let binpredict = await binmodel.predict(tensor).data()
 	// console.log(binpredict)
 	// $('#prediction-list').append(`<li>pneumonia: ${binpredict[0].toFixed(6)}</li>`)
-  $('#predict-loading-container').show()
 	let multipredicts = await multimodel.predict(tensor).data()
 	console.log(multipredicts)
 	let top5 = Array.from(multipredicts)
@@ -67,8 +66,6 @@ $("#predict-button").click(async function () {
     i += 1
 	})
   $('#predict-loading-container').hide()
-  document.getElementById('predict-result-container').style.animation = ''
-  document.getElementById('predict-result-container').style.animation = 'spin2 1s linear'
 	// let sum = 0
 	// multipredicts.forEach(function(p){
 	// 	sum += p
